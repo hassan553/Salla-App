@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class CategoriesModel {
   bool? status;
 
   Data? data;
+  CategoriesModel({this.status, this.data});
 
   CategoriesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];

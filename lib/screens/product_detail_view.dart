@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:store_app/core/models/product_model.dart';
-import 'package:store_app/ui/views/search_product_view.dart';
+import 'package:store_app/screens/widgets/custom_darwer.dart';
 
-import '../widgets/widgets.dart';
+import '../../models/product_model.dart';
+import 'search_product_view.dart';
 
 class ProductDetailView extends StatelessWidget {
-  Products? productModel;
-  ProductDetailView({Key? key, this.productModel}) : super(key: key);
+  final Products? productModel;
+  const ProductDetailView({Key? key, this.productModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: buildDrawer(context),
+      drawer: const BuildDrawer(),
       appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -20,7 +19,7 @@ class ProductDetailView extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SearchProductView();
+                  return const SearchProductView();
                 }));
               },
               icon: const Icon(
@@ -32,9 +31,9 @@ class ProductDetailView extends StatelessWidget {
                 Icons.person,
               )),
         ],
-        title: Text(
+        title: const Text(
           'Salla App',
-          style: GoogleFonts.abel(
+          style: TextStyle(
             fontSize: 20,
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -87,7 +86,7 @@ class ProductDetailView extends StatelessWidget {
               ),
               Text(
                 productModel?.name ?? ' ',
-                style: GoogleFonts.abel(fontSize: 25),
+                style: const TextStyle(fontSize: 25),
               ),
               const SizedBox(
                 height: 10,
@@ -96,7 +95,7 @@ class ProductDetailView extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Text(
                     productModel?.description ?? ' ',
-                    style: GoogleFonts.abel(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
@@ -107,12 +106,12 @@ class ProductDetailView extends StatelessWidget {
                     children: [
                       Text(
                         '\$ ${productModel?.price.toString()}',
-                        style: GoogleFonts.alatsi(
+                        style: const TextStyle(
                             fontSize: 18, color: Colors.deepPurpleAccent),
                       ),
                       Text(
                         '\$ ${productModel?.oldPrice.toString()}',
-                        style: GoogleFonts.alatsi(
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
                           decoration: TextDecoration.lineThrough,
@@ -124,11 +123,11 @@ class ProductDetailView extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.blue, minimumSize: const Size(50, 50)),
-                    child: Text(
+                        backgroundColor: Colors.blue,
+                        minimumSize: const Size(50, 50)),
+                    child: const Text(
                       'Add To Cart ',
-                      style:
-                          GoogleFonts.alatsi(fontSize: 15, color: Colors.black),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ),
                 ],

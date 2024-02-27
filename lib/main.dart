@@ -1,13 +1,13 @@
-import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/core/view_models/products_view_models/products_cubit.dart';
-import 'package:store_app/ui/views/auth/login_view_page.dart';
-import 'package:store_app/ui/views/auth/register_view_page.dart';
-import 'package:store_app/ui/views/home_view_page.dart';
-import 'package:store_app/ui/views/product_detail_view.dart';
+import 'package:store_app/core/services/service_locator.dart';
+import 'package:store_app/screens/home_view_page.dart';
+import 'view_model/auth/auth_cubit.dart';
+import 'view_model/home/products_cubit.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -18,14 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) =>locator<AuthCubit>()),
         BlocProvider(
-            create: (context) => ProductsCubit()
-              ..fatchProductsData()
-              ..fatchCategoriesData()),
+            create: (context) => locator<ProductsCubit>()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RegisterView(),
+        title: '',
+        home: HomePageView(),
       ),
     );
   }

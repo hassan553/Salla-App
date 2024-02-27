@@ -1,18 +1,26 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:store_app/core/view_models/products_view_models/products_cubit.dart';
-import 'package:store_app/ui/views/product_detail_view.dart';
+import 'package:store_app/screens/product_detail_view.dart';
+import 'package:store_app/screens/widgets/custom_darwer.dart';
+import '../../models/product_model.dart';
+import '../view_model/home/products_cubit.dart';
 
-import '../../core/models/product_model.dart';
-import '../widgets/widgets.dart';
+class SearchProductView extends StatefulWidget {
+  const SearchProductView({Key? key}) : super(key: key);
 
-class SearchProductView extends StatelessWidget {
-  SearchProductView({Key? key}) : super(key: key);
+  @override
+  State<SearchProductView> createState() => _SearchProductViewState();
+}
+
+class _SearchProductViewState extends State<SearchProductView> {
   var searchController = TextEditingController();
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsState>(
@@ -21,7 +29,7 @@ class SearchProductView extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          drawer: buildDrawer(context),
+          drawer: const BuildDrawer(),
           appBar: AppBar(
             elevation: 0,
             iconTheme: const IconThemeData(color: Colors.black),
@@ -30,7 +38,7 @@ class SearchProductView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SearchProductView();
+                      return const SearchProductView();
                     }));
                   },
                   icon: const Icon(
@@ -42,9 +50,9 @@ class SearchProductView extends StatelessWidget {
                     Icons.person,
                   )),
             ],
-            title: Text(
+            title: const Text(
               'Salla App',
-              style: GoogleFonts.abel(
+              style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -56,7 +64,7 @@ class SearchProductView extends StatelessWidget {
             child: Column(
               children: [
                 _buildSearchTextField(context, (value) {
-                  ProductsCubit.get(context).searForProduct(value);
+                  ProductsCubit.get(context).searchForProduct(value);
                 }),
                 const SizedBox(
                   height: 10,
@@ -69,7 +77,8 @@ class SearchProductView extends StatelessWidget {
                     builder: (context) => ListView.separated(
                       itemBuilder: (context, index) {
                         return buildProductItem(
-                            ProductsCubit.get(context).searchProducts[index],context);
+                            ProductsCubit.get(context).searchProducts[index],
+                            context);
                       },
                       separatorBuilder: (context, index) {
                         return const Divider();
@@ -91,7 +100,7 @@ class SearchProductView extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetailView();
+          return const ProductDetailView();
         }));
       },
       child: Row(
@@ -113,7 +122,7 @@ class SearchProductView extends StatelessWidget {
                 model.name.toString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.alatsi(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           ),
@@ -135,6 +144,7 @@ class SearchProductView extends StatelessWidget {
         if (value == null) {
           return 'not valid empty value';
         }
+        return null;
       },
       controller: searchController,
       decoration: InputDecoration(

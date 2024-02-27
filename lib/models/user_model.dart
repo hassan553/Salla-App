@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   bool? status;
   String? message;
   Data? data;
+  UserModel({this.status, this.message, this.data});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];

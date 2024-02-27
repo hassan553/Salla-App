@@ -1,21 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/core/models/product_model.dart';
-import 'package:store_app/core/view_models/products_view_models/products_cubit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:store_app/ui/views/product_detail_view.dart';
-import 'package:store_app/ui/views/products_view.dart';
-import 'package:store_app/ui/views/search_product_view.dart';
-import 'package:store_app/ui/widgets/widgets.dart';
-import '../../core/models/category_model.dart';
+import 'package:store_app/models/product_model.dart';
+import 'package:store_app/screens/product_detail_view.dart';
+import 'package:store_app/screens/widgets/custom_darwer.dart';
+
+import '../../models/category_model.dart';
+import '../view_model/home/products_cubit.dart';
+import 'search_product_view.dart';
 
 class HomePageView extends StatelessWidget {
-  HomePageView({Key? key}) : super(key: key);
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +21,7 @@ class HomePageView extends StatelessWidget {
         var cubit = ProductsCubit.get(context);
         Size size = MediaQuery.of(context).size;
         return Scaffold(
-          drawer: buildDrawer(context),
+          drawer: const BuildDrawer(),
           appBar: AppBar(
             elevation: 0,
             iconTheme: const IconThemeData(color: Colors.black),
@@ -34,7 +30,7 @@ class HomePageView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SearchProductView();
+                      return const SearchProductView();
                     }));
                   },
                   icon: const Icon(
@@ -46,9 +42,9 @@ class HomePageView extends StatelessWidget {
                     Icons.person,
                   )),
             ],
-            title: Text(
+            title: const Text(
               'Salla App',
-              style: GoogleFonts.abel(
+              style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -72,9 +68,9 @@ class HomePageView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Categories',
-                        style: GoogleFonts.alatsi(fontSize: 20),
+                        style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
                         height: size.height * .02,
@@ -83,11 +79,11 @@ class HomePageView extends StatelessWidget {
                       SizedBox(
                         height: size.height * .05,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Text(
-                            'Best Sall',
-                            style: GoogleFonts.alatsi(fontSize: 25),
+                            'Best Sale',
+                            style: TextStyle(fontSize: 25),
                           ),
                         ],
                       ),
@@ -265,9 +261,7 @@ class HomePageView extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return const SizedBox(
-            width: 8,
-          );
+          return const SizedBox(width: 8);
         },
         itemCount: model.data!.data!.length,
       ),
@@ -278,7 +272,7 @@ class HomePageView extends StatelessWidget {
     return CarouselSlider(
       items: model.data!.banners!.map((e) {
         return Image.network(
-          '${e.image}',
+          e.image ?? '',
           fit: BoxFit.cover,
           width: double.infinity,
         );

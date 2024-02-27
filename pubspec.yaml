@@ -30,14 +30,15 @@ dependencies:
   carousel_slider: ^4.1.1
   conditional_builder_null_safety: ^0.0.6
   cupertino_icons: ^1.0.2
+  dartz: ^0.10.1
+  easy_splash_screen: null
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   fluttertoast: ^8.0.9
-  google_fonts: ^3.0.1
+  get_it: ^7.6.7
   http: ^0.13.4
   smooth_page_indicator: ^1.0.0+2
-  easy_splash_screen:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
